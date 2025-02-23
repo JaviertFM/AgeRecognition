@@ -1,82 +1,23 @@
+Repositorio:
 
-Dataset: 
-
-https://susanqq.github.io/UTKFace/
-
-https://www.kaggle.com/datasets/skillcate/merged-augmented-utk-faces-facial-age-dataset UTK y otro combinados y aumentados
-
-https://paperswithcode.com/dataset/fg-net (solo 1 k)
-
-https://dcnhan.github.io/projects/aging_project/the-agfw-database.html#:~:text=In%20order%20to%20train%20the,from%2010%20to%2064%20years.		( AginG Faces in the Wild (AGFW) )
+https://github.com/JaviertFM/AgeRecognition
 
 
+Datasets used:
 
-2read
-	
-	Paper
-
-https://ieeexplore.ieee.org/document/8901521
-
-https://philarchive.org/archive/MANCOA-4
-
-	Resnet:
-
-http://personal.cimat.mx:8181/~mrivera/cursos/aprendizaje_profundo/resnet/resnet.html
-
-
-
-Leidos:
-
-http://personal.cimat.mx:8181/~mrivera/cursos/aprendizaje_profundo/resnet/resnet.html	CAFFE
-
-https://www.geeksforgeeks.org/age-detection-using-deep-learning-in-opencv/	CAFFE
-
-------------------------------------------------------
-
-
-Caffe tiene un modelo para age recognition (usado en los ejemplos). También YOLO
+https://drive.google.com/drive/folders/1_OFxvbr6ozinRFYRqjyU9iypyV9aohzF?usp=sharing
 
 
 
 
------------------------------------------
 
-	PREPROCESADO
+Original datasets:
 
-Ideas from: file:///C:/Users/Javier/Downloads/Age_Estimation_by_Super-Resolution_Reconstruction_.pdf
+UTKFace original - https://susanqq.github.io/UTKFace/
 
-- Pasarle a la red img original, bbox, crop de eyes (añadir frownt), y scruntch (mouth) como en dataset
+UTK-augmented - https://www.kaggle.com/datasets/skillcate/merged-augmented-utk-faces-facial-age-dataset UTK y otro combinados y aumentados
 
-- Para data augmentation:
-	Jugar con color spaces. Grayscale. En vez de pasarle imagen en RGB, pasarle 3 imágenes con un solo canal (R, G y B). Igual con otra fuente de canales YUV
+FG-Net - https://paperswithcode.com/dataset/fg-net
 
-	Hacer equialización (suavizado de imagen) y denoise (las imágenes tienen mucho ruido como para meterle ruido asi que denoise mejor)
-	
-	Cambiar brightness y HUE
+AginG Faces in the Wild (AGFW) - https://dcnhan.github.io/projects/aging_project/the-agfw-database.html#:~:text=In%20order%20to%20train%20the,from%2010%20to%2064%20years.		
 
-	Tipico de flip, rotation y tal.
-
-- Como va a haber muchas imágenes renta cambiar la entrada a una jerarquía de carpetas como la siguiente:
-	age_group1:
-		-original_image
-		-facee
-		-eyescrop (separar en left right si se quiere)
-		-mouth
-
-- Se pueden entrenar N redes (tantas como features se le pase) y luego juntar la salida como una densa. También se pueden juntar todas las entradas y pasárselo del tiri a una red, pero meh.
-
-
-
-
--------------------
-
-	PROCESADO 
-
-- Hacer bootstraping repartiendo la probabilidad para no tener iteraciones que estén desbalanceadas de una sola clase (si 80% de dataset entre 20 y 40 años, darle algo más de probabilidad de aparecer en el dataset del Bootstrap a los que son fuera de ese rango porque si no igual solo pilla de ese rango).
-
-- Pasar imagen cropeada y hacer preprocessing de flip, color spaces, y lo que se pueda en memoria.
-
-
-- En el Bootstrap fijarse en el loss function. Cuando la función de perdida se "estabilice" (no tenga picos cuando cambia de muestreo del Bootstrap), el modelo está entrenado. Si el modelo falla cambiar learning rate // cambiar estructura de la red, pero como tal ya está en su prime.
-
- 
